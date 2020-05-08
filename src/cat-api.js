@@ -43,3 +43,16 @@ exports.getFact = function () {
     );
   });
 };
+
+exports.getMagic8 = function (question) {
+  return new Promise(async function (resolve, reject) {
+    webRequest(`https://8ball.delegator.com/magic/JSON/${encodeURIComponent(question)}`).then(
+      (result) => {
+        resolve(result);
+      },
+      (error) => {
+        reject(error);
+      }
+    );
+  });
+};

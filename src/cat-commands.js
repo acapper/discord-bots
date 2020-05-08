@@ -10,6 +10,7 @@ class CatCommands extends CommandManager {
         image: this.image.bind(this),
         gif: this.gif.bind(this),
         fact: this.fact,
+        magic8: this.magic8.bind(this)
       },
     };
 
@@ -55,6 +56,18 @@ class CatCommands extends CommandManager {
 
   fact(msg) {
     catapi.getFact().then((result) => msg.channel.send(result.fact));
+  }
+
+  magic8(msg, args) {
+    args = args.slice(2);
+    catapi.getMagic8(args.join(' ')).then((result) => {
+      const magic = result.magic;
+      const embed = new MessageEmbed().setColor(this.colour).setDescription(`**Question:** ${magic.question}\n**Answer:** ${magic.answer}`).setFooter(magic.type);
+      msg.reply(embed);
+    },
+    (reason) => {
+      error(reason);
+    })
   }
 }
 

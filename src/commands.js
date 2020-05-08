@@ -16,7 +16,7 @@ class CommandManager {
 
   all(msg, args) {
     const command = this.commands[
-      args[0].substring(this.prefix.length, args[0].length)
+      args[0].substring(this.prefix.length, args[0].length).toLowerCase()
     ];
 
     this.findCommand(msg, args, command, 0);
@@ -27,7 +27,7 @@ class CommandManager {
       command(msg, args);
     } else if (typeof command === 'object') {
       idx += 1;
-      this.findCommand(msg, args, command[args[idx]], idx);
+      this.findCommand(msg, args, command[args[idx].toLowerCase()], idx);
     } else {
       this.default(msg, args);
     }
