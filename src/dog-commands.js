@@ -32,7 +32,6 @@ class DogCommands extends CommandManager {
               .page(res.results[0])
               .then((page) => {
                 page.summary().then((description) => {
-                  console.log(url)
                   const imageName = url.substring(url.lastIndexOf('/') + 1);
                   const embed = new MessageEmbed()
                     .setColor(this.colour)
@@ -61,7 +60,7 @@ class DogCommands extends CommandManager {
         .setColor(this.colour)
         .attachFiles([{name: imageName, attachment:url}])
         .setImage(`attachment://${imageName}`);
-        
+
         msg.reply(embed);
       },
       (reason) => {
