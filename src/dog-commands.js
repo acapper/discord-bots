@@ -32,11 +32,14 @@ class DogCommands extends CommandManager {
               .page(res.results[0])
               .then((page) => {
                 page.summary().then((description) => {
+                  console.log(url)
+                  const imageName = url.substring(url.lastIndexOf('/') + 1);
                   const embed = new MessageEmbed()
                     .setColor(this.colour)
                     .setTitle(breed.name)
-                    .setDescription(description + '\n' + page.raw.fullurl)
-                    .setImage(url);
+                    .attachFiles([{name: imageName, attachment:url}])
+                    .setImage(`attachment://${imageName}`)
+                    .setDescription(description + '\n' + page.raw.fullurl);
 
                   msg.reply(embed);
                 });
@@ -53,7 +56,12 @@ class DogCommands extends CommandManager {
     dogapi.getImage(msg.author.username, 'gif', false).then(
       (result) => {
         var url = result[0].url;
-        const embed = new MessageEmbed().setColor(this.colour).setImage(url);
+        const imageName = url.substring(url.lastIndexOf('/') + 1);
+        const embed = new MessageEmbed()
+        .setColor(this.colour)
+        .attachFiles([{name: imageName, attachment:url}])
+        .setImage(`attachment://${imageName}`);
+        
         msg.reply(embed);
       },
       (reason) => {

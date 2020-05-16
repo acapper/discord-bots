@@ -27,11 +27,13 @@ class CatCommands extends CommandManager {
         var url = result[0].url;
         var breed = result[0].breeds[0];
 
+        const imageName = url.substring(url.lastIndexOf('/') + 1);
         const embed = new MessageEmbed()
           .setColor(this.colour)
           .setTitle(breed.name)
           .setDescription(breed.description + '\n' + breed.wikipedia_url)
-          .setImage(url);
+          .attachFiles([{name: imageName, attachment:url}])
+          .setImage(`attachment://${imageName}`);
 
         msg.reply(embed);
       },
@@ -45,7 +47,11 @@ class CatCommands extends CommandManager {
     catapi.getImage(msg.author.username, 'gif', false).then(
       (result) => {
         var url = result[0].url;
-        const embed = new MessageEmbed().setColor(this.colour).setImage(url);
+        const imageName = url.substring(url.lastIndexOf('/') + 1);
+        const embed = new MessageEmbed()
+        .setColor(this.colour)
+        .attachFiles([{name: imageName, attachment:url}])
+        .setImage(`attachment://${imageName}`);
         msg.reply(embed);
       },
       (reason) => {
