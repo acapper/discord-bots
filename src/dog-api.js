@@ -42,12 +42,3 @@ exports.getFact = function () {
     );
   });
 };
-
-var randomProperty = function (obj) {
-  var keys = Object.keys(obj);
-  return keys[(keys.length * Math.random()) << 0];
-};
-
-function capitalizeFirstLetter(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-}
